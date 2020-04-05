@@ -1,12 +1,13 @@
 import React from "react";
-// Lib
+// Components
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Header from "components/header/Header";
 // Pages
 
 const App = () => {
   return (
     <Router>
-      {/* TODO: header */}
+      <Header />
       <Switch>
         <Route path="/">todo</Route>
         <Route path="/results">todo</Route>
