@@ -1,15 +1,22 @@
 import React from "react";
 // Components
-import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Typography } from "@material-ui/core";
+// Styles
+import { withStyles } from "@material-ui/core/styles";
+import styles from "./Header.styles";
 
-const Header = () => {
+type HeaderProps = {
+  classes: {
+    header: string;
+  };
+};
+
+const Header = ({ classes }: HeaderProps) => {
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6">formik-react-hooks-multi-step</Typography>
-      </Toolbar>
+    <AppBar position="static" className={classes.header}>
+      <Typography variant="h6">formik-react-hooks-multi-step</Typography>
     </AppBar>
   );
 };
 
-export default Header;
+export default withStyles(styles)(Header);

@@ -2,6 +2,7 @@ import React from "react";
 // Components
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "components/header/Header";
+import Footer from "components/footer/Footer";
 // Pages
 
 const App = () => {
@@ -12,7 +13,7 @@ const App = () => {
         <Route path="/">todo</Route>
         <Route path="/results">todo</Route>
       </Switch>
-      {/* TODO: footer */}
+      <Footer />
     </Router>
   );
 };
