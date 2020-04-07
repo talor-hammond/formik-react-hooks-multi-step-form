@@ -3,6 +3,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "components/header/Header";
 import Footer from "components/footer/Footer";
+import Questionnaire from "pages/questionnaire/Questionnaire";
 // Pages
 
 const App = () => {
@@ -10,7 +11,7 @@ const App = () => {
     <Router>
       <Header />
       <Switch>
-        <Route path="/">todo</Route>
+        <Route path="/" component={Questionnaire} />
         <Route path="/results">todo</Route>
       </Switch>
       <Footer />
