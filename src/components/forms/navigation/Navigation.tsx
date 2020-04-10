@@ -48,9 +48,7 @@ const Navigation = ({
         </Button>
       )}
 
-      <Button fullWidth btnStyle="transparent" onClick={onClickBack}>
-        Back
-      </Button>
+      <Button onClick={onClickBack}>Back</Button>
     </div>
   );
 };
