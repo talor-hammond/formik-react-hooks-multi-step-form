@@ -1,4 +1,6 @@
 // Components & schema
+import FirstNameStep from "./firstNameStep/FirstNameStep";
+import FirstNameStepSchema from "./firstNameStep/FirstNameStep.schema";
 
 // Other types:
 import { FormikValues } from "formik";
@@ -13,15 +15,20 @@ export type Step = {
 /** Considered the maximum possible steps for a user -- optionally perform filtering logic in `generateSteps` if you need to */
 const baseSteps: Step[] = [
   {
-    name: "test1",
-    component: null,
-    validationSchema: null
-  },
-  {
-    name: "test2",
-    component: null,
-    validationSchema: null
+    name: "firstName",
+    component: FirstNameStep,
+    validationSchema: FirstNameStepSchema
   }
+  // {
+  //   name: "emailAddress",
+  //   component: null,
+  //   validationSchema: null
+  // },
+  // {
+  //   name: "phoneNumber",
+  //   component: null,
+  //   validationSchema: null
+  // }
 ];
 
 export const generateSteps = (): Step[] => {

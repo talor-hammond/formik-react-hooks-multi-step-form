@@ -1,12 +1,12 @@
 import React from "react";
 
 type ProgressStepperProps = {
-  steps: [];
+  steps: any[];
   currentIndex: number;
 };
 
 const ProgressStepper = ({ steps, currentIndex }: ProgressStepperProps) => {
-  const maxSteps = steps.length - 1;
+  const maxSteps = steps.length;
 
   return (
     <div>
