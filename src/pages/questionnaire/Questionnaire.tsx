@@ -13,11 +13,11 @@ const Questionnaire = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const goNext = () => {
-    setCurrentIndex(oldIndex => oldIndex + 1);
+    setCurrentIndex((oldIndex) => oldIndex + 1);
   };
 
   const goBack = () => {
-    setCurrentIndex(oldIndex => oldIndex - 1);
+    setCurrentIndex((oldIndex) => oldIndex - 1);
   };
 
   const renderCurrentStep = (form: FormikProps<FormikValues>) => {
@@ -25,7 +25,8 @@ const Questionnaire = () => {
 
     const commonProps = {
       name: step.name,
-      form
+      form,
+
       // opportunity to extend commonProps here with other relevant information
     };
 
@@ -50,7 +51,7 @@ const Questionnaire = () => {
         onSubmit={handleSubmitQuestionnaire}
         validateOnMount
       >
-        {form => {
+        {(form) => {
           return (
             <>
               {renderCurrentStep(form)}
