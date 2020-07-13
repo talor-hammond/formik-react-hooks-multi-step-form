@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 // Components
 import { Formik, FormikProps, FormikValues } from "formik";
 import { Typography } from "@material-ui/core";
@@ -11,6 +12,7 @@ const Questionnaire = () => {
   const [steps] = useState(generateSteps());
   const [initialValues] = useState(generateInitialValues(steps));
   const [currentIndex, setCurrentIndex] = useState(0);
+  const history = useHistory();
 
   const goNext = () => {
     setCurrentIndex((oldIndex) => oldIndex + 1);
@@ -23,11 +25,10 @@ const Questionnaire = () => {
   const renderCurrentStep = (form: FormikProps<FormikValues>) => {
     const step = steps[currentIndex];
 
+    // opportunity to extend commonProps here with other relevant information
     const commonProps = {
       name: step.name,
       form,
-
-      // opportunity to extend commonProps here with other relevant information
     };
 
     const StepComponent = step.component;
@@ -35,8 +36,9 @@ const Questionnaire = () => {
     return <StepComponent {...commonProps} />;
   };
 
-  const handleSubmitQuestionnaire = (values: FormikValues, actions: any) => {
-    console.log(values);
+  const handleSubmitQuestionnaire = (values: FormikValues) => {
+    // Opportunity to perform API call here
+    history.push("/results", { values });
   };
 
   return (

@@ -6,14 +6,16 @@ import EmailAddressStepSchema from "./emailAddress/EmailAddressStep.schema";
 import PhoneNumberStep from "./phoneNumberStep/PhoneNumberStep";
 import PhoneNumberStepSchema from "./phoneNumberStep/PhoneNumberStep.schema";
 
-// Other types:
-import { FormikValues } from "formik";
+// Types
+import * as Yup from "yup";
 
 export type Step = {
-  /** Identifies the name of the step & key in initialValues */
+  /** Identifies the name of the step & key in initialValues
+   * Can use an 'id' here, doesn't necessarily have to be a 'name' prop.
+   */
   name: string;
-  component: any; // TODO: type these
-  validationSchema: any; // TODO
+  component: React.ElementType;
+  validationSchema: Yup.Schema<any>;
 };
 
 /** Considered the maximum possible steps for a user -- optionally perform filtering logic in `generateSteps` if you need to */
@@ -41,7 +43,7 @@ export const generateSteps = (): Step[] => {
   return baseSteps;
 };
 
-export const generateInitialValues = (filteredSteps: Step[]): FormikValues => {
+export const generateInitialValues = (filteredSteps: Step[]) => {
   // These initial values are assumed to be `null`.
   // In more complex cases you may want to populate these values w/ data from an API, so you could do what you need to do in here
   const initialValues = filteredSteps.reduce((values, step) => {

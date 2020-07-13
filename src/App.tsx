@@ -6,6 +6,7 @@ import Footer from "components/footer/Footer";
 import CoreLayout from "components/coreLayout/CoreLayout";
 // Pages
 import Questionnaire from "pages/questionnaire/Questionnaire";
+import Results from "pages/results/Results";
 
 const App = () => {
   return (
@@ -13,8 +14,8 @@ const App = () => {
       <Header />
       <CoreLayout>
         <Switch>
-          <Route path="/" component={Questionnaire} />
-          <Route path="/results">todo</Route>
+          <Route path="/" component={Questionnaire} exact />
+          <Route path="/results" component={Results} />
         </Switch>
       </CoreLayout>
       <Footer />
