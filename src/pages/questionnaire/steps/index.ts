@@ -2,7 +2,9 @@
 import FirstNameStep from "./firstNameStep/FirstNameStep";
 import FirstNameStepSchema from "./firstNameStep/FirstNameStep.schema";
 import EmailAddressStep from "./emailAddress/EmailAddressStep";
-import EmailAddressSchema from "./emailAddress/EmailAddressStep.schema";
+import EmailAddressStepSchema from "./emailAddress/EmailAddressStep.schema";
+import PhoneNumberStep from "./phoneNumberStep/PhoneNumberStep";
+import PhoneNumberStepSchema from "./phoneNumberStep/PhoneNumberStep.schema";
 
 // Other types:
 import { FormikValues } from "formik";
@@ -24,13 +26,13 @@ const baseSteps: Step[] = [
   {
     name: "emailAddress",
     component: EmailAddressStep,
-    validationSchema: EmailAddressSchema,
+    validationSchema: EmailAddressStepSchema,
   },
-  // {
-  //   name: "phoneNumber",
-  //   component: null,
-  //   validationSchema: null,
-  // },
+  {
+    name: "phoneNumber",
+    component: PhoneNumberStep,
+    validationSchema: PhoneNumberStepSchema,
+  },
 ];
 
 export const generateSteps = (): Step[] => {
