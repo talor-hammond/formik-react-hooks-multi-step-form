@@ -62,6 +62,8 @@ export const getStepSchema = (currentIndex: number, steps: Step[]) => {
 
 **See `src/pages/questionnaire/steps/index.ts` for a reference to the above code**
 
+<br />
+
 # The multi-step form: `Questionnaire.tsx`
 
 * Call `generateSteps`, `generateInitialValues`, and instantiate a `currentIndex` to keep track of what step in the form the user is up to:
@@ -74,8 +76,9 @@ const Questionnaire = () => {
   ...
 ```
 
-We will also define:
-`goNext` & `goBack`
+**We will also define**:
+
+`goNext` & `goBack` 
   * Use to update `currentIndex`. We will pass this to our `Navigation` component
 
 `renderCurrentStep`
@@ -97,18 +100,22 @@ We will also define:
 
 `handleSubmitQuestionnaire`
   * Define our submit-handler. Typical use-cases might be to hit an API and then re-direct...
-    ```tsx
-        const handleSubmitQuestionnaire = (values: FormikValues) => {
-        // Opportunity to perform API call here
-        return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve();
-        }, 2000);
-        }).then(() => {
-        history.push(`/questionnaire/results`, { values });
-        });
-    };
-    ```
+
+```tsx
+    const handleSubmitQuestionnaire = (values: FormikValues) => {
+    // Opportunity to perform API call here
+    return new Promise((resolve) => {
+    setTimeout(() => {
+        resolve();
+    }, 2000);
+    }).then(() => {
+    history.push(`/questionnaire/results`, { values });
+    });
+};
+```
+
+<br />
+
 # `Navigation.tsx`
 
 Our `Navigation` component will take advantage of the `useFormikContext` hook: it will expose all of the parent form's props.
@@ -137,6 +144,8 @@ const Navigation = ({
     validateForm();
   }, [currentIndex, validateForm]);
 ```
+
+<br />
 
 # Summary
 
