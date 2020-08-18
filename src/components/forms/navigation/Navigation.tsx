@@ -1,33 +1,35 @@
 import React, { useEffect } from "react";
 // Components
-import { Button } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 // Hooks
 import { useFormikContext } from "formik";
 
 type NavigationProps = {
   maxSteps: number;
   currentIndex: number;
-  isValid: boolean;
   onClickNext: () => void;
   onClickBack: () => void;
-  handleSubmit: () => void;
-  isSubmitting: boolean;
 };
 
 /** Gotcha: Will need to be a child of a Formik component to have access to Formik context */
 const Navigation = ({
   maxSteps,
   currentIndex,
-  isValid,
   onClickNext,
   onClickBack,
-  isSubmitting,
-  handleSubmit
 }: NavigationProps) => {
+  const isFirstStep = currentIndex === 0;
   const isLastStep = currentIndex === maxSteps - 1;
-  const { validateForm } = useFormikContext();
 
-  // Will run form.validateForm() when the currentIndex prop is updated :)
+  // Grab what we need from formik without prop-drilling
+  const {
+    validateForm,
+    handleSubmit,
+    isSubmitting,
+    isValid,
+  } = useFormikContext();
+
+  // Will run form.validateForm() when the currentIndex prop is changed
   useEffect(() => {
     validateForm();
   }, [currentIndex, validateForm]);
@@ -35,12 +37,8 @@ const Navigation = ({
   return (
     <div>
       {isLastStep ? (
-        <Button
-          disabled={!isValid}
-          // isLoading={isSubmitting}
-          onClick={handleSubmit}
-        >
-          Submit
+        <Button disabled={!isValid} onClick={() => handleSubmit()}>
+          {isSubmitting ? <CircularProgress size={14} /> : "Submit"}
         </Button>
       ) : (
         <Button disabled={!isValid} onClick={onClickNext}>
@@ -48,7 +46,7 @@ const Navigation = ({
         </Button>
       )}
 
-      <Button onClick={onClickBack}>Back</Button>
+      {!isFirstStep && <Button onClick={onClickBack}>Back</Button>}
     </div>
   );
 };

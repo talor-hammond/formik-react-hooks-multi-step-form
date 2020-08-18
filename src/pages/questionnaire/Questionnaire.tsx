@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 // Components
 import { Formik, FormikProps, FormikValues } from "formik";
-import { Typography } from "@material-ui/core";
 import Navigation from "components/forms/navigation/Navigation";
 import Progress from "components/forms/progress/Progress";
 // Util
@@ -38,13 +37,17 @@ const Questionnaire = () => {
 
   const handleSubmitQuestionnaire = (values: FormikValues) => {
     // Opportunity to perform API call here
-    history.push("/results", { values });
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 2000);
+    }).then(() => {
+      history.push(`/questionnaire/results`, { values });
+    });
   };
 
   return (
     <>
-      <Typography>Here's a title</Typography>
-
       <Progress steps={steps} currentIndex={currentIndex} />
 
       <Formik
@@ -61,11 +64,8 @@ const Questionnaire = () => {
               <Navigation
                 maxSteps={steps.length}
                 currentIndex={currentIndex}
-                isValid={form.isValid}
                 onClickNext={goNext}
                 onClickBack={goBack}
-                handleSubmit={form.handleSubmit}
-                isSubmitting={form.isSubmitting}
               />
             </>
           );
