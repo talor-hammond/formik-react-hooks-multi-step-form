@@ -11,7 +11,7 @@ type Step = {
    */
   name: string;
   component: React.ElementType;
-  validationSchema: Yup.Schema<any>;
+  validationSchema: Yup.Schema<...>;
 };
 ```
 
@@ -61,3 +61,86 @@ export const getStepSchema = (currentIndex: number, steps: Step[]) => {
 ```
 
 **See `src/pages/questionnaire/steps/index.ts` for a reference to the above code**
+
+# The multi-step form: `Questionnaire.tsx`
+
+* Call `generateSteps`, `generateInitialValues`, and instantiate a `currentIndex` to keep track of what step in the form the user is up to:
+
+```tsx
+const Questionnaire = () => {
+  const [steps] = useState(generateSteps());
+  const [initialValues] = useState(generateInitialValues(steps));
+  const [currentIndex, setCurrentIndex] = useState(0);
+  ...
+```
+
+We will also define:
+`goNext` & `goBack`
+  * Use to update `currentIndex`. We will pass this to our `Navigation` component
+
+`renderCurrentStep`
+  ```tsx
+    const renderCurrentStep = (form: FormikProps<FormikValues>) => {
+        const step = steps[currentIndex];
+
+        // opportunity to extend commonProps here with other relevant information
+        const commonProps = {
+        name: step.name,
+        form,
+        };
+
+        const StepComponent = step.component;
+
+        return <StepComponent {...commonProps} />;
+    };
+  ```
+
+`handleSubmitQuestionnaire`
+  * Define our submit-handler. Typical use-cases might be to hit an API and then re-direct...
+    ```tsx
+        const handleSubmitQuestionnaire = (values: FormikValues) => {
+        // Opportunity to perform API call here
+        return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 2000);
+        }).then(() => {
+        history.push(`/questionnaire/results`, { values });
+        });
+    };
+    ```
+# `Navigation.tsx`
+
+Our `Navigation` component will take advantage of the `useFormikContext` hook: it will expose all of the parent form's props.
+It lets you validate and handle-submission without the need for prop drilling.
+
+```tsx
+const Navigation = ({
+  maxSteps,
+  currentIndex,
+  onClickNext,
+  onClickBack,
+}: NavigationProps) => {
+  const isFirstStep = currentIndex === 0;
+  const isLastStep = currentIndex === maxSteps - 1;
+
+  // Grab what we need from formik without prop-drilling
+  const {
+    validateForm,
+    handleSubmit,
+    isSubmitting,
+    isValid,
+  } = useFormikContext();
+
+  // Will run form.validateForm() when the currentIndex prop is changed
+  useEffect(() => {
+    validateForm();
+  }, [currentIndex, validateForm]);
+```
+
+# Summary
+
+Well, that's pretty much the bones of it... multiple-steps on one page, values, validation, and more. The rest is entirely up to you and your use case :)
+
+
+
