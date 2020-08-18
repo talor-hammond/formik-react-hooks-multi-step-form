@@ -1,3 +1,5 @@
+[![Edit Formik multi-step form with React hooks and TypeScript](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/twilight-sun-8srg8?fontsize=14&hidenavigation=1&theme=dark)
+
 # Setup
 
 We'll need a way of determining an array of `Step` -- this is entirely up to you.
