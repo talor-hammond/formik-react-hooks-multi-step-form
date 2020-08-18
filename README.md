@@ -1,5 +1,14 @@
 [![Edit Formik multi-step form with Hooks and TypeScript](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/gracious-joliot-ie5xs?fontsize=14&hidenavigation=1&theme=dark)
 
+# Goals
+
+* Create a form that has multiple steps
+  * The number of steps the user sees and the `initialValues` of the form can be dynamic
+* Validate each 'step' independently
+* Handle async form submission and any other side-effects
+
+<br />
+
 # Setup
 
 We'll need a way of determining an array of `Step` -- this is entirely up to you.
@@ -107,11 +116,11 @@ const Questionnaire = () => {
     const handleSubmitQuestionnaire = (values: FormikValues) => {
     // Opportunity to perform API call here
     return new Promise((resolve) => {
-    setTimeout(() => {
+      setTimeout(() => {
         resolve();
-    }, 2000);
+      }, 2000);
     }).then(() => {
-    history.push(`/questionnaire/results`, { values });
+      history.push(`/questionnaire/results`, { values });
     });
 };
 ```
