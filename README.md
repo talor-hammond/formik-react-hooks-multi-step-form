@@ -1,44 +1,63 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Setup
 
-## Available Scripts
+We'll need a way of determining an array of `Step` -- this is entirely up to you.
 
-In the project directory, you can run:
+Each `Step` will have this shape:
 
-### `yarn start`
+```tsx
+type Step = {
+  /** Identifies the name of the step & key in initialValues
+   * Can use an 'id' here, doesn't necessarily have to be a 'name' prop.
+   */
+  name: string;
+  component: React.ElementType;
+  validationSchema: Yup.Schema<any>;
+};
+```
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+It is important that each one has a `component` and `validationSchema` prop.
+The reference to the component will be used to determine which "step" is rendered; the `validationSchema` will be used to run validation against each step independently.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Dynamic steps-array via `generateSteps`
 
-### `yarn test`
+In some cases, you might be provided information from an API that will tell you whether a user won't see *all* the available steps:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```tsx
+export const generateSteps = (hasAlreadyDoneXStep: boolean): Step[] => {
+  // Depending on the type of user, and the requirements for the form that are needed -- you can perform filtering logic here to omit steps that aren't
+  // necessary for each case
+  let steps = baseSteps;
 
-### `yarn build`
+  if (hasAlreadyDoneXStep) {
+      steps = baseSteps.filter... // something like that, it's up to you...
+  }
+    
+  return steps;
+};
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Dynamic `initialValues`
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```tsx
+export const generateInitialValues = (filteredSteps: Step[]) => {
+  // These initial values are assumed to be `null`.
+  // In more complex cases you may want to populate these values w/ data from an API, so you could do what you need to do in here
+  const initialValues = filteredSteps.reduce((values, step) => {
+    return { ...values, [step.name]: null };
+  }, {});
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  return initialValues;
+};
+```
 
-### `yarn eject`
+The above arrow-function also gives you an opportunity to pre-populate `initialValues` if you've saved that information somewhere.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Getting `validationSchema` for a given step
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```tsx
+export const getStepSchema = (currentIndex: number, steps: Step[]) => {
+  return steps[currentIndex].validationSchema;
+};
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+**See `src/pages/questionnaire/steps/index.ts` for a reference to the above code**
