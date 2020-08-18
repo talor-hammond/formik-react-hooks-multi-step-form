@@ -1,4 +1,4 @@
-[![Edit Formik multi-step form with React hooks and TypeScript](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/twilight-sun-8srg8?fontsize=14&hidenavigation=1&theme=dark)
+[![Edit Formik multi-step form with Hooks and TypeScript](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/gracious-joliot-ie5xs?fontsize=14&hidenavigation=1&theme=dark)
 
 # Setup
 
